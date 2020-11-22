@@ -4,14 +4,16 @@ using EmployeeManagement.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EmployeeManagement.Migrations
 {
     [DbContext(typeof(EmployeeManagementDbContext))]
-    partial class EmployeeManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201122133148_intialMigration")]
+    partial class intialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1512,59 +1514,6 @@ namespace EmployeeManagement.Migrations
                     b.ToTable("AbpUsers");
                 });
 
-            modelBuilder.Entity("EmployeeManagement.DomainModel.Department", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("CreatorUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("LastModifierUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Departments");
-                });
-
-            modelBuilder.Entity("EmployeeManagement.DomainModel.Employee", b =>
-                {
-                    b.Property<long?>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ContactNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<Guid?>("Did")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Qualification")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Did");
-
-                    b.ToTable("Employees");
-                });
-
             modelBuilder.Entity("EmployeeManagement.MultiTenancy.Tenant", b =>
                 {
                     b.Property<int>("Id")
@@ -1822,19 +1771,6 @@ namespace EmployeeManagement.Migrations
                     b.HasOne("EmployeeManagement.Authorization.Users.User", "LastModifierUser")
                         .WithMany()
                         .HasForeignKey("LastModifierUserId");
-                });
-
-            modelBuilder.Entity("EmployeeManagement.DomainModel.Employee", b =>
-                {
-                    b.HasOne("EmployeeManagement.DomainModel.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("Did");
-
-                    b.HasOne("EmployeeManagement.Authorization.Users.User", "User")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("EmployeeManagement.MultiTenancy.Tenant", b =>
